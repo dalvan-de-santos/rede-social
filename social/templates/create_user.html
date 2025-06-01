@@ -1,0 +1,23 @@
+{% extends "global/base.html" %}
+
+{% block body %}
+    <h1>Criar usuario</h1>
+    <h2>Não repare na bagunça, ainda estou em desenvolvimento</h2>
+
+    <div>
+        <form action="{% url 'create_user' %}" method="POST">
+        {% csrf_token %}
+        <label for="">Usuario</label><br>
+        <input type="text" name="username" placeholder="Crie seu nome de usuario"><br>
+
+        <label for="">E-mail</label><br>
+        <input type="email" name="email" placeholder="Digite seu email"><br>
+
+        <label for="">Senha</label><br>
+        <input type="password" name="senha" placeholder="Crie sua senha"><br>
+
+        <input type="submit" value="Criar">
+
+        </form>
+    </div>
+{% endblock body %}
