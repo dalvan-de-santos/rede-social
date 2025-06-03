@@ -3,7 +3,10 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .models import Profile
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
+from .forms import ProfileForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import logout
 
 
 
@@ -41,4 +44,31 @@ def profile(resquest):
 
 @login_required
 def editar_profile(resquest):
-    return HttpResponse('Editar perfil')
+    profile, _ = Profile.objects.get_or_create(id_user=resquest.user)
+
+    if resquest.method == 'POST':
+        form = ProfileForm(resquest.POST, resquest.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:    
+        form = ProfileForm(instance=profile)
+    return render(resquest, 'editar_profile.html', {'form': form})
+
+
+def login_user(resquest):
+    if resquest.method == 'POST':
+        form = AuthenticationForm(resquest, data=resquest.POST)
+        if form.is_valid():
+            login(resquest, form.get_user())
+            return redirect('profile')
+    else:   
+        form = AuthenticationForm()
+
+
+    return render(resquest, 'login.html', {'form': form})
+
+
+def logout_user(resquest):
+    logout(resquest)
+    return redirect('login_user')
