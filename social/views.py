@@ -5,6 +5,7 @@ from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from .forms import ProfileForm
+from .forms import PostForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
 
@@ -72,3 +73,17 @@ def login_user(resquest):
 def logout_user(resquest):
     logout(resquest)
     return redirect('login_user')
+
+@login_required
+def criar_post(resquest):
+    if resquest.method == 'POST':
+        form = PostForm(resquest.POST, resquest.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.id_user = resquest.user
+            post.save()
+            return redirect('profile')
+    else:
+        form = PostForm()
+
+    return render(resquest, 'criar_post.html', {'form': form})
