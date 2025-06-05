@@ -152,3 +152,11 @@ body {
     font-size: 2rem;
   }
 }
+
+.centralizar-imagem {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: cover;
+  height: 200px; 
+}

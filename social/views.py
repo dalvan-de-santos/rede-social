@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from .models import Profile
+from .models import Profile, Post
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from .forms import ProfileForm
@@ -41,7 +41,8 @@ def create_user(resquest):
 @login_required
 def profile(resquest):
     profile = resquest.user.profile
-    return render(resquest, 'profile.html', {'profile': profile})
+    post = Post.objects.filter(id_user = resquest.user).order_by("data_criacao")
+    return render(resquest, 'profile.html', {'profile': profile, 'posts': post})
 
 @login_required
 def editar_profile(resquest):
