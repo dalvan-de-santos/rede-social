@@ -1,0 +1,21 @@
+{% extends "global/base.html" %}
+
+{% block body %}
+    <h1>Pagina inicial</h1>
+    {% if posts %}
+    <div class="row">
+      {% for post in posts %}
+        <div class="col-md-4">
+          <div class="card mb-4">
+            {% if post.foto %}
+              <img src="{{ post.foto.url }}" class="card-img-top" alt="Foto do post" style="object-fit: cover; height: 400px;">
+            {% endif %}
+            <div class="card-body">
+              <p class="card-text">{{ post.resumo }}</p>
+              <small class="text-muted">Publicado em {{ post.data_criacao|date:"d/m/Y H:i" }}</small>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      {% endif %}
+{% endblock body %}

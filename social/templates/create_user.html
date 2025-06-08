@@ -2,21 +2,26 @@
 
 {% block body %}
     <h1>Criar usuario</h1>
-    <h2>Não repare na bagunça, ainda estou em desenvolvimento</h2>
 
-    <div>
+    <div class="login-card">
         <form action="{% url 'create_user' %}" method="POST">
         {% csrf_token %}
-        <label for="">Usuario</label><br>
-        <input type="text" name="username" placeholder="Crie seu nome de usuario"><br>
+        <div class="form-group">
+            <label for="">Usuario</label><br>
+            <input type="text" name="username" placeholder="Crie seu nome de usuario">
+        </div>
 
-        <label for="">E-mail</label><br>
-        <input type="email" name="email" placeholder="Digite seu email"><br>
+        <div class="form-group">
+            <label for="">E-mail</label><br>
+            <input type="email" name="email" placeholder="Digite seu email">
+        </div>
 
-        <label for="">Senha</label><br>
-        <input type="password" name="senha" placeholder="Crie sua senha"><br>
+        <div class="form-group">
+            <label for="">Senha</label><br>
+            <input type="password" name="senha" placeholder="Crie sua senha">
+        </div>
 
-        <input type="submit" value="Criar">
+        <button type="submit">Criar</button>
 
         </form>
     </div>

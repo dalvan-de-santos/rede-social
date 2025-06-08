@@ -1,10 +1,11 @@
 <header class="site-header">
     <div class="container">
-      <a href="#" class="logo">MeuSite</a>
+      <a href="#" class="logo">ReadBook</a>
       <nav class="main-nav">
         <ul>
-          <li><a href="{% url 'login_user' %}">Pagina inicial</a></li>
-          <li><a href="{% url 'create_user' %}" class="btn-outline">Explorar</a></li>
+          <li><a href="{% url 'pagina_inicial' %}">Pagina inicial</a></li>
+          <li><a href="{% url 'explorar' %}" class="btn-outline">Explorar</a></li>
+          <li><a href="{% url 'profile' %}" class="btn-outline">Perfil</a></li>
         </ul>
       </nav>
     </div>

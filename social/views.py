@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from .models import Profile, Post
+from django.http import HttpResponse, JsonResponse
+from .models import Profile, Post, Followers
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from .forms import ProfileForm
@@ -42,6 +42,8 @@ def create_user(resquest):
 def profile(resquest):
     profile = resquest.user.profile
     post = Post.objects.filter(id_user = resquest.user).order_by("data_criacao")
+
+
     return render(resquest, 'profile.html', {'profile': profile, 'posts': post})
 
 @login_required
@@ -79,6 +81,7 @@ def logout_user(resquest):
 def criar_post(resquest):
     if resquest.method == 'POST':
         form = PostForm(resquest.POST, resquest.FILES)
+        
         if form.is_valid():
             post = form.save(commit=False)
             post.id_user = resquest.user
@@ -88,3 +91,48 @@ def criar_post(resquest):
         form = PostForm()
 
     return render(resquest, 'criar_post.html', {'form': form})
+
+@login_required
+def pagina_inicial(resquest):
+    posts = Post.objects.filter(id_user=resquest.user.id)
+    print(posts)
+
+    return render(resquest, 'pagina_inicial.html', {'posts': posts})
+
+
+@login_required
+def toggle_follow(resquest, id_user):
+    alvo = get_object_or_404(User, id=id_user)
+
+    if resquest.user == alvo:
+        return redirect('profile')
+    
+    rel = Followers.objects.filter(
+        id_seguidor=resquest.user,
+        id_seguido=alvo
+    )
+
+    if rel.exclude():
+        rel.delete()
+    
+    else:
+        Followers.objects.create(
+            id_seguidor=resquest.user,
+            id_segudo=alvo
+        )
+
+    return redirect('perfil_detail') 
+
+
+@login_required
+def explorar(resquest):
+    perfis = Profile.objects.select_related('id_user').only(
+        'foto', 'id_user__username'
+    )
+
+    return render(resquest, 'explorar.html', {'perfis': perfis,} )
+
+@login_required
+def perfil_detail(resquest, username):
+    perfil = get_object_or_404(Profile, id_user__username=username)
+    return render(resquest, 'perfil_detail.html', {'profile': perfil})

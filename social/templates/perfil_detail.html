@@ -1,0 +1,30 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block body %}
+    <article class="perfil-detail">
+    <header>
+      {% if profile.foto %}
+        <img src="{{ profile.foto.url }}"
+             alt="{{ profile.id_user.username }}"
+             class="avatar-large">
+      {% else %}
+        <img src="{% static 'img/default-avatar.png' %}"
+             alt="Avatar padrão"
+             class="avatar-large">
+      {% endif %}
+      <h1>{{ profile.id_user.username }}</h1>
+    </header>
+
+    {% if profile.bio %}
+      <section class="bio">
+        <h2>Sobre</h2>
+        <p>{{ profile.bio }}</p>
+      </section>
+    {% endif %}
+{% if seguindo %}
+  <button>Você já segue</button>
+{% else %}
+  <button>Seguir</button>
+{% endif %}
+{% endblock body %}

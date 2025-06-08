@@ -11,12 +11,12 @@
     integrity="sha384-…"
     crossorigin="anonymous"
   >
-  <!-- Font Awesome (opcional para ícones) -->
+  
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     rel="stylesheet"
   >
-  <!-- Seu CSS customizado -->
+ 
   
     {% endblock head %}
     <title> {% block title %}Document{% endblock title %}</title>
@@ -28,6 +28,34 @@
 
 {% endblock body %}
 
-
+<script>
+  const btn = document.getElementById('btn-follow');
+  if (btn) {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const userId = btn.dataset.userId;
+      fetch(`/usuario/${userId}/follow/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+      })
+      .then(res => {
+        if (!res.ok) throw res;
+        return res.json();
+      })
+      .then(data => {
+        btn.textContent = data.following ? 'Deixar de seguir' : 'Seguir';
+        document.getElementById('count-followers')
+                .textContent = data.followers_count;
+        btn.dataset.following = data.following ? '1' : '0';
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    });
+  }
+</script>
 </body>
 </html>

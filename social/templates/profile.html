@@ -46,6 +46,9 @@
             </a>
           </div>
           <a href="{% url 'criar_post' %}">Criar post</a>
+
+  
+
         </div>
       </div>
     </div>
@@ -57,7 +60,7 @@
         <div class="col-md-4">
           <div class="card mb-4">
             {% if post.foto %}
-              <img src="{{ post.foto.url }}" class="card-img-top" alt="Foto do post" style="object-fit: cover; height: 200px;">
+              <img src="{{ post.foto.url }}" class="card-img-top" alt="Foto do post" style="object-fit: cover; height: 400px;">
             {% endif %}
             <div class="card-body">
               <p class="card-text">{{ post.resumo }}</p>
@@ -71,5 +74,6 @@
     <p>Você ainda não tem posts publicados.</p>
   {% endif %}
 </div>
+
 <a href="{% url 'logout' %}">Logout</a>
 {% endblock body %}

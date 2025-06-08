@@ -4,6 +4,9 @@
     <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if form.name == 'foto' %}
+        <p>A inagem aqui</p>
+    {% endif %}
     <button type="submit">Criar Post</button>
 </form>
 {% endblock body %}

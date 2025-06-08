@@ -13,6 +13,13 @@ class ProfileForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    foto = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                'accept': 'image/*',
+            }
+        )
+    )
     class Meta:
         model = Post
         fields = ['foto', 'resumo']
