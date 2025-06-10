@@ -1,0 +1,81 @@
+:root {
+      --color-primary: #005f99;
+      --color-secondary: #00b4d8;
+      --color-light: #ffffff;
+      --color-dark: #333333;
+      --bg-light: #f5f7fa;
+      --radius: 8px;
+      --transition: 0.3s ease;
+    }
+
+    
+    
+
+   
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      color: var(--color-primary);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+   
+    .login-card {
+      width: 500px;
+      background-color: var(--color-light);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .login-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+   
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .form-group input:focus {
+      border-color: var(--color-primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 95, 153, 0.15);
+    }
+
+   
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-light);
+      background-color: var(--color-primary);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background-color var(--transition), transform var(--transition);
+    }
+
+    button:hover {
+      background-color: var(--color-secondary);
+      transform: translateY(-2px);
+    }

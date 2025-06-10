@@ -1,0 +1,117 @@
+/* 1) Google Font + Tema */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --color-primary: #4C6ef5;
+  --color-accent: #f9a826;
+  --color-bg: #f5f7fa;
+  --color-card: #ffffff;
+  --color-text: #333333;
+  --color-border: #d1d5db;
+  --color-gray: #6b7280;
+  --radius: 8px;
+  --gap: 1rem;
+  --transition: 0.25s ease;
+}
+
+
+
+/* 3) Container do Form */
+.post-form {
+  max-width: 600px;
+  margin: 3rem auto;
+  background: var(--color-card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 4) Cabeçalho */
+.post-form h1 {
+  background: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  padding: var(--gap);
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+/* 5) Form layout */
+.post-form form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: var(--gap);
+}
+
+/* 6) Cada campo (form.as_p gera <p>) */
+.post-form form p {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 7) Labels */
+.post-form form label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: var(--color-text);
+}
+
+/* 8) Inputs, textarea, select */
+.post-form form input[type="text"],
+.post-form form input[type="file"],
+.post-form form textarea,
+.post-form form select {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  font-size: 1rem;
+  background: #fff;
+}
+
+.post-form form input:focus,
+.post-form form textarea:focus,
+.post-form form select:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76,110,245,0.2);
+}
+
+/* 9) Preview de imagem */
+.post-form .foto-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-gray);
+  font-size: 0.9rem;
+  background: #fafafa;
+  transition: background var(--transition);
+}
+
+.post-form .foto-preview:hover {
+  background: #f0f4ff;
+}
+
+/* 10) Botão de submit */
+.post-form button {
+  align-self: flex-start;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform var(--transition), filter var(--transition);
+}
+
+.post-form button:hover {
+  filter: brightness(0.9);
+  transform: translateY(-2px);
+}
+

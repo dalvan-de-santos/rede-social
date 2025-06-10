@@ -1,0 +1,102 @@
+/* Fonte + variáveis */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
+:root {
+  --color-primary:   #4e73df;
+  --color-bg:        #f8f9fc;
+  --color-card:      #ffffff;
+  --color-error:     #e74a3b;
+  --color-text:      #333333;
+  --radius:          0.5rem;
+  --transition:      0.3s ease;
+}
+
+/* Reset básico */
+
+
+/* Container do formulário */
+.edit-profile {
+  max-width: 600px;
+  margin: 3rem auto;
+  background: var(--color-card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.edit-profile h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-primary);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Cada campo */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Textarea (bio) e input file */
+.edit-profile-form textarea,
+.edit-profile-form input[type="file"] {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  transition: border var(--transition), box-shadow var(--transition);
+  font-family: inherit;
+}
+
+/* Foco nos campos */
+.edit-profile-form textarea:focus,
+.edit-profile-form input[type="file"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Mensagens de erro */
+.edit-profile-form .errorlist {
+  margin-top: 0.5rem;
+  color: var(--color-error);
+  font-size: 0.875rem;
+}
+
+/* Botão Salvar */
+.edit-profile-form button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--color-primary);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.edit-profile-form button[type="submit"]:hover {
+  background-color: #2e59d9;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .edit-profile {
+    margin: 2rem 1rem;
+    padding: 1.5rem;
+  }
+  .edit-profile h1 {
+    font-size: 1.5rem;
+  }
+}

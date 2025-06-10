@@ -94,8 +94,11 @@ def criar_post(resquest):
 
 @login_required
 def pagina_inicial(resquest):
-    posts = Post.objects.filter(id_user=resquest.user.id)
+    seguidos_ids = Followers.objects.filter(id_seguido=resquest.user).values_list('id_seguido', flat=True)
+
+    posts = Post.objects.filter(id_user__in=seguidos_ids).select_related('id_user').order_by('-data_criacao')
     print(posts)
+    
 
     return render(resquest, 'pagina_inicial.html', {'posts': posts})
 
@@ -130,9 +133,19 @@ def explorar(resquest):
         'foto', 'id_user__username'
     )
 
+   
     return render(resquest, 'explorar.html', {'perfis': perfis,} )
 
 @login_required
 def perfil_detail(resquest, username):
     perfil = get_object_or_404(Profile, id_user__username=username)
-    return render(resquest, 'perfil_detail.html', {'profile': perfil})
+    posts = Post.objects.filter(id_user=perfil.id_user).order_by('data_criacao')
+    
+    
+    return render(resquest, 'perfil_detail.html', {'profile': perfil, 'posts': posts})
+
+
+def apagar_post(resquest, id_post):
+    post = Post.objects.get(id=id_post)
+    post.delete()
+    return redirect('profile')

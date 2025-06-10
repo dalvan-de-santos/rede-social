@@ -1,12 +1,13 @@
 {% extends "global/base.html" %}
 
 {% block body %}
-    <form method="post" enctype="multipart/form-data">
+    <section class="post-form">
+  <h1>Criar Post</h1>
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    {% if form.name == 'foto' %}
-        <p>A inagem aqui</p>
-    {% endif %}
+    
     <button type="submit">Criar Post</button>
-</form>
+  </form>
+</section>
 {% endblock body %}

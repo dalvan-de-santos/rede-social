@@ -1,0 +1,141 @@
+ 
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
+:root {
+  --color-primary:   #4e73df;
+  --color-accent:    #f6c23e;
+  --color-light:     #fff;
+  --color-dark:      #2e2e2e;
+  --transition:      0.3s ease;
+}
+
+ 
+ 
+ *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: black;
+      color: var(--color-dark);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+
+    /* 1) Fonte + variáveis */
+
+
+/* 2) Header fixo e sombra sutil */
+.site-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+/* 3) Container flexível */
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 4) Logo */
+.logo {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-light);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.logo:hover {
+  color: var(--color-accent);
+}
+
+/* 5) Navegação principal */
+.main-nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.main-nav a {
+  color: var(--color-light);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: color var(--transition);
+}
+/* Linha animada embaixo do link ativo/hover */
+.main-nav a::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: var(--color-accent);
+  width: 0%;
+  transition: width var(--transition);
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+.main-nav a:hover::after,
+.main-nav a.active::after {
+  width: 100%;
+}
+
+/* 6) Botões “Explorar” e “Perfil” */
+.btn-outline {
+  border: 2px solid var(--color-light);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  margin-left: 0.5rem;
+  transition: background var(--transition), color var(--transition);
+}
+.btn-outline:hover {
+  background: var(--color-light);
+  color: var(--color-primary);
+}
+
+/* 7) Mobile first: menu hamburguer */
+@media (max-width: 768px) {
+  .main-nav ul {
+    position: fixed;
+    top: 0; right: -100%;
+    height: 100vh;
+    width: 240px;
+    background-color: var(--color-primary);
+    flex-direction: column;
+    padding-top: 5rem;
+    gap: 1.5rem;
+    transition: right var(--transition);
+  }
+  .main-nav.open ul {
+    right: 0;
+  }
+  /* ícone do botão */
+  .site-header .menu-toggle {
+    display: block;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--color-light);
+  }
+}
