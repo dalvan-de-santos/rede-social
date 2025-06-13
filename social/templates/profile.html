@@ -12,7 +12,7 @@
         </div>
 
         <div class="card-body">
-          <!-- Foto -->
+          
           <div class="text-center mb-4">
             {% if profile.foto %}
               <img
@@ -54,29 +54,42 @@
       </div>
     </div>
   </div>
-<h2>Meus Posts</h2>
-  {% if posts %}
-    <div class="row">
-      {% for post in posts %}
-        <div class="col-md-4">
-          <div class="card mb-4">
-            {% if post.foto %}
-              <img src="{{ post.foto.url }}" class="card-img-top" alt="Foto do post" style="object-fit: cover; height: 400px;">
-            {% endif %}
-            <div class="card-body">
-              <p class="card-text">{{ post.resumo }}</p>
-              <small class="text-muted">Publicado em {{ post.data_criacao|date:"d/m/Y H:i" }}</small>
-              <a href="{% url 'apagar_post' post.id %}">Apagar</a>
+<main class="content">
+  <section class="meus-posts">
+    <h2>Meus Posts</h2>
+
+    {% if posts %}
+      <div class="posts-list">
+        {% for post in posts %}
+          <div class="post-card">
+            <div class="card">
+              {% if post.foto %}
+                <img src="{{ post.foto.url }}"
+                     class="card-img-top"
+                     alt="Foto do post">
+              {% endif %}
+              <div class="card-body">
+                <p class="card-text">{{ post.resumo }}</p>
+                <small class="text-muted">
+                  Publicado em {{ post.data_criacao|date:"d/m/Y H:i" }}
+                </small>
+                <a href="{% url 'apagar_post' post.id %}"
+                   class="link-delete">
+                  Apagar
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p>Você ainda não tem posts publicados.</p>
-  {% endif %}
-  <a href="{% url 'logout' %}" class="btn btn-outline-primary">Logout</a>
-</div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty">Você ainda não tem posts publicados.</p>
+    {% endif %}
+
+    <a href="{% url 'logout' %}" class="btn-logout">
+      Logout
+    </a>
+  </section>
 
 
 {% endblock body %}

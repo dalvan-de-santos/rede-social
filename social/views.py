@@ -8,6 +8,7 @@ from .forms import ProfileForm
 from .forms import PostForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
+from django.contrib import messages
 
 
 
@@ -38,7 +39,7 @@ def create_user(resquest):
 
 
 
-@login_required
+@login_required(login_url='homepage')
 def profile(resquest):
     profile = resquest.user.profile
     post = Post.objects.filter(id_user = resquest.user).order_by("data_criacao")
@@ -46,7 +47,7 @@ def profile(resquest):
 
     return render(resquest, 'profile.html', {'profile': profile, 'posts': post})
 
-@login_required
+@login_required(login_url='homepage')
 def editar_profile(resquest):
     profile, _ = Profile.objects.get_or_create(id_user=resquest.user)
 
@@ -77,7 +78,7 @@ def logout_user(resquest):
     logout(resquest)
     return redirect('login_user')
 
-@login_required
+@login_required(login_url='homepage')
 def criar_post(resquest):
     if resquest.method == 'POST':
         form = PostForm(resquest.POST, resquest.FILES)
@@ -92,42 +93,40 @@ def criar_post(resquest):
 
     return render(resquest, 'criar_post.html', {'form': form})
 
-@login_required
+@login_required(login_url='homepage')
 def pagina_inicial(resquest):
-    seguidos_ids = Followers.objects.filter(id_seguido=resquest.user).values_list('id_seguido', flat=True)
+    seguidos_ids = Followers.objects.filter(id_seguidor=resquest.user).values_list('id_seguido', flat=True)
 
-    posts = Post.objects.filter(id_user__in=seguidos_ids).select_related('id_user').order_by('-data_criacao')
+    posts = Post.objects.filter(id_user__in=seguidos_ids).select_related('id_user').order_by('data_criacao')
     print(posts)
     
 
     return render(resquest, 'pagina_inicial.html', {'posts': posts})
 
 
-@login_required
-def toggle_follow(resquest, id_user):
-    alvo = get_object_or_404(User, id=id_user)
+@login_required(login_url='homepage')
+def toggle_follow(resquest, username):
+    alvo = get_object_or_404(User, username=username)
 
     if resquest.user == alvo:
-        return redirect('profile')
+        messages.error(resquest, "VC NÃO PODE SEGUIR A SI MESMO")
+        return redirect('perfil_detail', username=username)
     
-    rel = Followers.objects.filter(
+    rel, created = Followers.objects.get_or_create(
         id_seguidor=resquest.user,
         id_seguido=alvo
     )
 
-    if rel.exclude():
+    if not created:
         rel.delete()
+        messages.success(resquest, f"VC DEIXOU DE SEGUIR {alvo.username}")
     
     else:
-        Followers.objects.create(
-            id_seguidor=resquest.user,
-            id_segudo=alvo
-        )
-
-    return redirect('perfil_detail') 
+       messages.success(resquest, f"VC ESTA SEGUINDO {alvo.username}")
+    return redirect('perfil_detail', username=username) 
 
 
-@login_required
+@login_required(login_url='homepage')
 def explorar(resquest):
     perfis = Profile.objects.select_related('id_user').only(
         'foto', 'id_user__username'
@@ -136,13 +135,18 @@ def explorar(resquest):
    
     return render(resquest, 'explorar.html', {'perfis': perfis,} )
 
-@login_required
+@login_required(login_url='homepage')
 def perfil_detail(resquest, username):
     perfil = get_object_or_404(Profile, id_user__username=username)
     posts = Post.objects.filter(id_user=perfil.id_user).order_by('data_criacao')
+
+    is_self = perfil.id_user == resquest.user
+    is_following = False
+    if not is_self:
+        is_following = Followers.objects.filter(id_seguidor=resquest.user, id_seguido=perfil.id_user).exists()
     
     
-    return render(resquest, 'perfil_detail.html', {'profile': perfil, 'posts': posts})
+    return render(resquest, 'perfil_detail.html', {'profile': perfil, 'posts': posts, 'is_self': is_self, 'is_following': is_following})
 
 
 def apagar_post(resquest, id_post):

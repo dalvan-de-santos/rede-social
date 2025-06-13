@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block body %}
+{% include "global/partels/header.html" %}
     <article class="perfil-detail">
     <header>
       {% if profile.foto %}
@@ -22,19 +23,37 @@
         <p>{{ profile.bio }}</p>
       </section>
     {% endif %}
+
+    {% if not is_self %}
+  <form action="{% url 'toggle_follow' profile.id_user.username %}" method="post">
+    {% csrf_token %}
+    {% if is_following %}
+      <button type="submit">Deixar de seguir</button>
+    {% else %}
+      <button type="submit">Seguir</button>
+    {% endif %}
+  </form>
+{% endif %}
+</article>
+
+
     <h2>Meus Posts</h2>
   
   {% if posts %}
-    <div class="row">
+    <div class="posts-list">
       {% for post in posts %}
-        <div class="col-md-4">
-          <div class="card mb-4">
+        <div class="post-card">
+          <div class="card">
             {% if post.foto %}
-              <img src="{{ post.foto.url }}" class="card-img-top" alt="Foto do post" style="object-fit: cover; height: 400px; width: 400px;">
+              <img src="{{ post.foto.url }}"
+                   class="card-img-top"
+                   alt="Foto do post">
             {% endif %}
             <div class="card-body">
-              <p class="card-text" >{{ post.resumo }}</p>
-              <small class="text-muted">Publicado em {{ post.data_criacao|date:"d/m/Y H:i" }}</small>
+              <p class="card-text">{{ post.resumo }}</p>
+              <small class="text-muted">
+                Publicado em {{ post.data_criacao|date:"d/m/Y H:i" }}
+              </small>
             </div>
           </div>
         </div>

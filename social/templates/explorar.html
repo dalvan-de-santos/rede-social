@@ -2,21 +2,24 @@
 {% load static %}
 {% block body %}
 {% include "global/partels/header.html" %}
-    <h1>Explorar</h1>
-
+    <main class="content-explorar">
+  <h1>Explorar</h1>
+  {% if perfis %}
     <div class="explorar-grid">
-    {% for perfil in perfis %}
-      <a href="{% url 'perfil_detail' perfil.id_user.username %}" class="item">
-        {% if perfil.foto %}
-          <img src="{{ perfil.foto.url }}" alt="{{ perfil.id_user.username }}">
-        {% else %}
-          <img src="{% static 'img/default-avatar.png' %}" alt="{{ perfil.id_user.username }}">
-        {% endif %}
-        <span class="username">{{ perfil.id_user.username }}</span>
-      </a>
-    {% empty %}
-      <p>Não há perfis para mostrar.</p>
-    {% endfor %}
-  </div>
-
+      {% for perfil in perfis %}
+        <a href="{% url 'perfil_detail' perfil.id_user.username %}" class="item">
+          {% if perfil.foto %}
+            <img src="{{ perfil.foto.url }}" alt="{{ perfil.id_user.username }}">
+          {% else %}
+            <img src="{% static 'img/default-avatar.png' %}"
+                 alt="{{ perfil.id_user.username }}">
+          {% endif %}
+          <span class="username">{{ perfil.id_user.username }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty">Não há perfis para mostrar.</p>
+  {% endif %}
+</main>
 {% endblock body %}

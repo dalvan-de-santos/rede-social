@@ -1,4 +1,4 @@
-/* 1) Import de fonte Google (opcional) */
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
 :root {
@@ -11,61 +11,78 @@
 }
 
 
-
-h1 {
-  text-align: center;
-  font-size: 2.5rem;
-  color: var(--color-primary);
-  margin-bottom: 1.5rem;
+.content-explorar {
+  margin-left: 240px;
+  padding: 2rem;
+  box-sizing: border-box;
+  min-height: 100vh;
 }
 
-/* 2) Grid responsivo */
+
+.content > h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+
 .explorar-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: var(--gap);
-  max-width: 1000px;
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
 }
 
-/* 3) Cartão de perfil */
+
 .explorar-grid .item {
-  background-color: #fff;
-  border-radius: var(--radius);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  text-decoration: none;
-  color: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-decoration: none;
+  background: #fff;
+  border-radius: 8px;
   padding: 1rem;
-  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform .2s, box-shadow .2s;
+}
+.explorar-grid .item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
-.explorar-grid .item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0,0,0,0.15);
-}
 
 .explorar-grid .item img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  border: 2px solid #eee;
   margin-bottom: 0.75rem;
 }
 
-.explorar-grid .username {
+.explorar-grid .item .username {
   font-size: 1rem;
+  color: #333;
   font-weight: 500;
   text-align: center;
-  word-wrap: break-word;
 }
 
-/* 4) Estado “vazio” */
-.explorar-grid p {
-  grid-column: 1 / -1;
+
+.empty {
   text-align: center;
-  font-size: 1.1rem;
-  color: #666;
+  color: #777;
+  font-style: italic;
+}
+
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  .explorar-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
 }
